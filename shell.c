@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int main(){
-	int cmd_num = 0;
+	int cmd_num = 0, i = 0;
 	char *cmd;
 	size_t buffersize = 20;
 	size_t length = 0;
@@ -16,7 +16,7 @@ int main(){
 
 	while(cmd_num < 10){
 		cmd = (char *)malloc(buffersize * sizeof(char)); 
-		if(cmd = NULL){
+		if(cmd == NULL){
 			perror("buffer allocation error!\n");
 			exit(1);
 		}
@@ -25,7 +25,7 @@ int main(){
 		
 		length = getline(&cmd, &buffersize, stdin);
 		cmd[--length] = '\0';
-		for(int i = 0; i < length; i++)
+		for(i = 0; i < length; i++)
 			if(cmd[i] == 32){
 				printf("error: Command cannot include space. Please re-enter.\n");
 				break;
