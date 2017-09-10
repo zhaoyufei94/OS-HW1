@@ -29,11 +29,6 @@ int main(){
             }
         if(i < length) continue;
         
-        /*
-        printf("%zu characters were read.\n",length);
-        printf("You typed: '%s'\n",cmd);
-        */
-
         if(!strcmp(cmd, "exit")){
         	printf("exit!\n");
         	return 0;
@@ -43,11 +38,19 @@ int main(){
         strcpy(tmp_cmd, "./");
         strcat(tmp_cmd, cmd);
         		
-        if(fork() == 0){
+        pid_t id = fork();
+
+        if(id > 0){
+        	printf("process '%s', pid: %d executed!\n", cmd, id);
+        	wait(&id);
+        }
+        else if(id == 0){
         	char *args[]={tmp_cmd,NULL};
        		execvp(args[0],args);
         	return 0;
         }
+        else
+        	printf("process execution error!\n");
         	        
         free(cmd);
         cmd_num ++;
